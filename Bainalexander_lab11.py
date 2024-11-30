@@ -34,7 +34,7 @@ def advection1d(method, nspace, ntime, tau_rel,params):
     if spectral_radius(A) > 1:
         print("Warning: Unstable integration requested!")
 
-    for n in range(1,ntime):
+    for n in range(0,ntime-1):
         a[:, n+1] = np.dot(A, a[:, n])
     return a,x,t
  
