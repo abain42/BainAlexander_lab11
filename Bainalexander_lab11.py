@@ -13,7 +13,15 @@ print(a)
 def advection1d(method, nspace, ntime, tau_rel,params):
     L, c = params
     x = np.linspace(-L / 2, L / 2, nspace)
-    h = x[1] - x[0]  
-    tau_crit = h / abs(c)  
+    h = L/ nspace  
+    tau_crit = h / c
     tau = tau_rel * tau_crit 
     t = np.arange(ntime) * tau 
+
+    for n in range(0,ntime-1):
+        if method == "FTCS":
+            A = make_tridiagonal(nspace, 1 - tau/h, 1, -1 + tau/h)
+        elif method == "Lax":
+            A = make_tridiagonal(nspace, 0.5 - tau/(2*h), 0, 0.5 + tau/(2*h))
+        else: 
+            return "INVALID METHOD"
