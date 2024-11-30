@@ -43,3 +43,15 @@ ntime = 500
 tau_rel = 1
 params = [5, 1]  # L=5, c=1
 
+a, x, t = advection1d("Lax", nspace, ntime, tau_rel, params)
+
+
+plt.figure(figsize=(10, 6))
+for n in range(0, ntime, ntime // 10):  
+    plt.plot(x, a[:, n], label=f'Time = {t[n]:.2f}')
+plt.xlabel('x')
+plt.ylabel('Wave Amplitude a(x, t)')
+plt.title('Wave Propagation (Lax Method)')
+plt.legend()
+plt.grid()
+plt.show()
