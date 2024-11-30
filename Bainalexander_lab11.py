@@ -21,8 +21,8 @@ def advection1d(method, nspace, ntime, tau_rel,params):
     tau = tau_rel * tau_crit 
     t = np.arange(ntime) * tau 
 
-    a = np.zeros(nspace,ntime)
-    a[:, 0] = make_initialcond()
+    a = np.zeros((nspace,ntime))
+    a[:, 0] = make_initialcond(sigma=0.2, K=35, x=x)
     for n in range(0,ntime-1):
         if method == "FTCS":
             A = make_tridiagonal(nspace, 1 - tau/h, 1, -1 + tau/h)
@@ -37,3 +37,9 @@ def advection1d(method, nspace, ntime, tau_rel,params):
     for n in range(1,ntime):
         a[:, n+1] = np.dot(A, a[:, n])
     return a,x,t
+ 
+nspace = 300
+ntime = 500
+tau_rel = 1
+params = [5, 1]  # L=5, c=1
+
